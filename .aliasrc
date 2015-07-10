@@ -1,0 +1,26 @@
+alias b=bundle
+alias bi="bundle install"
+alias be="bundle exec"
+alias beer="bundle exec rake"
+
+alias gdf="git diff"
+alias glg="git log"
+alias g=git
+alias master="git checkout master"
+alias develop="git checkout develop"
+alias gcob="git checkout -b"
+
+alias gdci="git duet-commit"
+alias gci="git commit"
+
+setopt sh_word_split
+git help -a | grep "^  [a-z]" | while read line; do
+  for word in $line
+  do
+    if ! type "$word" > /dev/null; then
+      alias $word="git ${word}"
+    fi
+  done
+done
+unsetopt sh_word_split
+unalias bundle

@@ -1,4 +1,5 @@
 """ Vundle """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype on
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -11,6 +12,8 @@ Plugin 'ctrlp.vim'
 Plugin 'ack.vim'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rvm'
 
 " for general text editing
 Plugin 'tComment'
@@ -308,3 +311,7 @@ if has('gui_running')
 " autocmd InsertLeave * :set relativenumber
 " autocmd CursorMoved * :set relativenumber
 endif
+
+" Spell checking for text formats
+au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile,*.feature setlocal spell
+autocmd FileType gitcommit setlocal spell

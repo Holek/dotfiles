@@ -44,6 +44,7 @@ set smartcase
 set noswapfile
 set showcmd
 set wildmode=list:longest,full
+set tags=.tags " Put ctags file in .tags
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
@@ -114,10 +115,23 @@ map <leader>rtp o.tap { \|o\| "DEBUG @bestie"; require "pry"; binding.pry }<esc>
 " Ruby no pry - remove a binding.pry from the current file, hope it's the one you wanted
 map <leader>rnp /binding.pry<cr>dd:noh
 
-" Ruby hash new - convert a string hash rocket to 1.9 hash syntax
-" "key" => value becomes key: value
+" Convert Ruby hash keys, works with visual selection
 " Works with single quotes too.
-map <leader>rhn ^xf=dwbr:j
+map <leader>rhn :call RubyHashConvertStringKeysToNewSyntax()<cr>
+map <leader>rho :call RubyHashConvertNewSyntaxKeysToStrings()<cr>
+map <leader>rh19 :call RubyHashConvertSymbolKeysToNewSyntax()<cr>
+
+function! RubyHashConvertStringKeysToNewSyntax()
+  normal ^xf=dwbr:j
+endfunction
+
+function! RubyHashConvertNewSyntaxKeysToStrings()
+  normal I"f:i"lcl =>j
+endfunction
+
+function! RubyHashConvertSymbolKeysToNewSyntax()
+  normal ^xf r:ldt j
+endfunction
 
 " Ruby hash old - converts 1.9 symbol hash syntax to double quoted string and hash rocket
 map <leader>rho I"f:i"lcl =>j
@@ -126,17 +140,17 @@ map <leader>rho I"f:i"lcl =>j
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
 
 " Run test, support all common Ruby test libs
-map <leader>rt :call RunTest(expand('%'))<cr>
+map <leader>rt :ccl<cr>:w<cr>:call RunTest(expand('%'))<cr><cr>
 
 " As above but only test on current line
-map <leader>rtl :call RunTestAtLine(expand('%'), line(".") + 1)<cr>
+map <leader>rtl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
 "
 " Repeats one of the above, for when you've navigated away from the test file
-map <leader>rl :call RepeatLastTest()<cr>
+map <leader>rr :ccl<cr>:w<cr>:call RepeatLastTest()<cr><cr>
 
 function! RepeatLastTest()
   if exists("g:last_test")
-    exec "Dispatch " . g:last_test
+    call RunTestCommand(g:last_test)
   else
     echo "No last test, <leader>rt to run this file."
   end
@@ -148,8 +162,7 @@ function! RunTestAtLine(filename, line_number)
 
   if strlen(test_command)
     let test_command_with_line = test_command . ":" . a:line_number
-    let g:last_test = test_command_with_line
-    exec "Dispatch " . test_command_with_line
+    call RunTestCommand(test_command_with_line)
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
@@ -160,12 +173,23 @@ function! RunTest(filename)
   let test_command = InferRubyTestCommand(a:filename)
 
   if strlen(test_command)
-    let g:last_test = test_command
-    exec "Dispatch " . test_command
+    call RunTestCommand(test_command)
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
 endfunction
+
+function! RunTestCommand(test_command)
+  let g:last_test = a:test_command
+  exec "Dispatch " . a:test_command
+  " exec("!testrunner-client " . a:test_command)
+endfunction
+
+" Copy and paste from system clipboard
+vmap <leader>y "+y
+nmap <leader>y "+yy
+map <leader>p "+p
+nmap <leader>P "+P
 
 " Infer and return corresponding command to run a Ruby test file
 function! InferRubyTestCommand(filename)
@@ -315,3 +339,9 @@ endif
 " Spell checking for text formats
 au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile,*.feature setlocal spell
 autocmd FileType gitcommit setlocal spell
+" Autocomplete with dictionary words when spell check is on
+set complete+=kspell
+
+" Remove 80 char line from temporary windows
+au BufReadPost quickfix exe "normal G"
+au BufReadPost quickfix setlocal colorcolumn=0

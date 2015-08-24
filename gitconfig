@@ -1,0 +1,18 @@
+[user]
+  name  = "Michał Połtyn"
+  email = mike@poltyn.com
+[push]
+  default = current
+[alias]
+  lg   = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  wip  = !git add -A && git commit -m WIP
+  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+  cob  = checkout -b
+  up   = !git pull --rebase --prune $@ && git submodule update --init --recursive
+  recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  merged-branches = !git branch --merged ${1-master}
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true

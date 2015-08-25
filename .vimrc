@@ -88,10 +88,13 @@ au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 " Return to last edit position when opening files
 if has("autocmd")
-    autocmd BufReadPost *
-         \ if line("'\"") > 0 && line("'\"") <= line("$") |
-         \   exe "normal! g`\"" |
-         \ endif
+  function! PositionCursorFromViminfo()
+    " Do not return caret position on git's COMMIT_EDITMSG
+    if !(bufname("%") =~ '\(COMMIT_EDITMSG\)') && line("'\"") > 1 && line("'\"") <= line("$")
+      exe "normal! g`\""
+    endif
+  endfunction
+  autocmd BufReadPost * call PositionCursorFromViminfo()
 endif
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""

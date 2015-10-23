@@ -11,7 +11,25 @@
   up   = !git pull --rebase --prune $@ && git submodule update --init --recursive
   recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   merged-branches = !git branch --merged ${1-master}
-
+  lm = "!f() { local method=$1; local file=$2; [[ -n \"$method\" && -n \"$file\" ]] || exit 1; git lg -L :$method:$file;}; f"
+[diff "jpg"]
+  textconv = exif
+  cachetextconv = true
+[diff "mp4"]
+  textconv = mplayer -vo null -ao null -frames 0 -identify
+  cachetextconv = true
+[diff "avi"]
+  textconv = mplayer -vo null -ao null -frames 0 -identify
+  cachetextconv = true
+[diff "flv"]
+  textconv = mplayer -vo null -ao null -frames 0 -identify
+  cachetextconv = true
+[diff "mov"]
+  textconv = mplayer -vo null -ao null -frames 0 -identify
+  cachetextconv = true
+[diff "mkv"]
+  textconv = mplayer -vo null -ao null -frames 0 -identify
+  cachetextconv = true
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f

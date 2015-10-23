@@ -44,7 +44,10 @@ set smartcase
 set noswapfile
 set showcmd
 set wildmode=list:longest,full
-set tags=.tags " Put ctags file in .tags
+set tags=.tags
+
+" Leader space
+let mapleader = "\<Space>"
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start

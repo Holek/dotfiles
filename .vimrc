@@ -104,6 +104,9 @@ if has("autocmd")
   autocmd BufReadPost * call PositionCursorFromViminfo()
 endif
 
+:nnoremap { :tabprev<CR>   " Previous tab
+:nnoremap } :tabnext<CR>   " Next tab
+
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
 " Open and reload vimrc

@@ -64,6 +64,9 @@ set background=light
 set t_Co=256                        " force vim to use 256 colors
 let g:solarized_termcolors=256      " use solarized 256 fallback
 
+" disable Ctrl+P caching
+let g:ctrlp_use_caching = 0
+
 " set vertical marker at col 80
 set colorcolumn=80
 

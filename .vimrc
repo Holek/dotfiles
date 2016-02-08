@@ -14,6 +14,7 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rvm'
+Plugin 'danro/rename.vim'
 
 " for general text editing
 Plugin 'tComment'

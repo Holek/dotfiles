@@ -14,6 +14,8 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rvm'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'danro/rename.vim'
 
 " for general text editing

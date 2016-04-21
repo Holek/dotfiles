@@ -335,22 +335,6 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tmp'
 map <D-/> :TComment<cr>
 map <leader>n :call RenameFile()<cr>
 
-""" MacVim specific """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if has('gui_running')
-" MacVim save on loss of focus
-" autocmd BufLeave,FocusLost * silent! wall
-
-" Intelligently switch between relative and absolute line number line number
-" autocmd FocusLost * :set norelativenumber
-" if mode() == 'i'
-"   autocmd FocusGained * :set relativenumber
-" endif
-" autocmd InsertEnter * :set norelativenumber
-" autocmd InsertLeave * :set relativenumber
-" autocmd CursorMoved * :set relativenumber
-endif
-
 " Spell checking for text formats
 au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile,*.feature setlocal spell
 autocmd FileType gitcommit setlocal spell

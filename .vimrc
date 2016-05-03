@@ -41,7 +41,7 @@ set number
 set hlsearch
 set incsearch
 set nowrap
-set winwidth=83
+" set winwidth=83
 set ignorecase
 set smartcase
 set noswapfile
@@ -70,7 +70,8 @@ let g:solarized_termcolors=256      " use solarized 256 fallback
 let g:ctrlp_use_caching = 0
 
 " set vertical marker at col 80
-set colorcolumn=80
+" set colorcolumn=80
+" highlight ColorColumn ctermbg=blac
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬

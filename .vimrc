@@ -222,17 +222,21 @@ function! InferRubyTestCommand(filename)
     return command . " " . a:filename
 endfunction
 
-" Infer RSpec file for current file
+" Infer RSpec/Cubumber steps file for current file
 function! InferSpecFile(filename)
     if a:filename =~ '^app'
       let spec_file = substitute(a:filename, '^app', 'spec', '')
+      let path = substitute(spec_file, '\.rb', '_spec.rb', '')
     elseif a:filename =~ '^lib/'
       let spec_file = substitute(a:filename, '^lib', 'spec', '')
+      let path = substitute(spec_file, '\.rb', '_spec.rb', '')
+    elseif a:filename =~ '^features/' && a:filename =~ '\.feature$'
+      let steps_file = substitute(a:filename, '^features', 'features/step_definitions', '')
+      let path = substitute(steps_file, '\.feature', '_steps.rb', '')
     else
       let spec_file = 'spec/' . a:filename
+      let path = substitute(spec_file, '\.rb', '_spec.rb', '')
     endif
-
-    let path = substitute(spec_file, '\.rb', '_spec.rb', '')
 
     return path
 endfunction

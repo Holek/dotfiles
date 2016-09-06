@@ -61,10 +61,11 @@ if !has('gui_running')
     let g:solarized_visibility = "high"
     let g:solarized_contrast = "high"
 endif
-colorscheme solarized
 set background=light
 set t_Co=256                        " force vim to use 256 colors
 let g:solarized_termcolors=256      " use solarized 256 fallback
+colorscheme solarized
+
 
 " disable Ctrl+P caching
 let g:ctrlp_use_caching = 0
@@ -337,7 +338,7 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tmp'
 
 " Command + / for commenting
-map <D-/> :TComment<cr>
+map <c-/> :TComment<cr>
 map <leader>n :call RenameFile()<cr>
 
 " Spell checking for text formats

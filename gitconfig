@@ -1,6 +1,6 @@
 [user]
   name  = "Michał Połtyn"
-  email = mike@poltyn.com
+  email = michal@poltyn.com
 [push]
   default = current
 [alias]
@@ -31,8 +31,13 @@
   textconv = mplayer -vo null -ao null -frames 0 -identify
   cachetextconv = true
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
 	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 [commit]
 	verbose = true
+[core]
+	editor = /usr/local/bin/vim
+	excludesfile = ~/.gitignore
+[url "git@github.com:"]
+	insteadOf = gh:

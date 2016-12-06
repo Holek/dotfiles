@@ -1,3 +1,7 @@
+alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log -f.tags'
+
+export EDITOR=`which vim`
+
 alias b=bundle
 alias bi="bundle install"
 alias be="bundle exec"

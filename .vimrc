@@ -1,5 +1,4 @@
 """ Vundle """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype on
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -29,7 +28,6 @@ Plugin 'haskell.vim'
 Plugin 'vim-coffee-script'
 
 call vundle#end()
-filetype plugin indent on
 
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -49,22 +47,21 @@ set showcmd
 set wildmode=list:longest,full
 set tags=.tags
 
+filetype plugin indent on
+" solarized options
+let g:solarized_termtrans=1
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
+set background=light
+set t_Co=256                        " force vim to use 256 colors
+let g:solarized_termcolors=256      " use solarized 256 fallback
+colorscheme solarized
+
 " Leader space
 let mapleader = "\<Space>"
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
-
-" solarized options
-if !has('gui_running')
-    let g:solarized_termtrans=1
-    let g:solarized_visibility = "high"
-    let g:solarized_contrast = "high"
-endif
-set background=light
-set t_Co=256                        " force vim to use 256 colors
-let g:solarized_termcolors=256      " use solarized 256 fallback
-colorscheme solarized
 
 
 " disable Ctrl+P caching
@@ -124,10 +121,10 @@ map <leader>n :call RenameFile()<cr>
 map <leader>rld Ilet(:wviwyA) { double(:pA) }
 
 " Ruby binding pry - insert binding.pry on the line above
-map <leader>rbp Orequire "pry"; binding.pry # DEBUG @bestie
+map <leader>rbp Orequire "pry"; binding.pry # DEBUG @holek<esc>
 
 " Ruby tap and pry
-map <leader>rtp o.tap { \|o\| "DEBUG @bestie"; require "pry"; binding.pry }<esc>
+map <leader>rtp o.tap { \|o\| "DEBUG @holek"; require "pry"; binding.pry }<esc>
 
 " Ruby no pry - remove a binding.pry from the current file, hope it's the one you wanted
 map <leader>rnp /binding.pry<cr>dd:noh

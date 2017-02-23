@@ -140,15 +140,16 @@ function! RubyHashConvertStringKeysToNewSyntax()
 endfunction
 
 function! RubyHashConvertNewSyntaxKeysToStrings()
-  normal I"f:i"lcl =>j
+  normal I"f:i"lcl =>j
 endfunction
 
-function! RubyHashConvertSymbolKeysToNewSyntax()
-  normal ^xf r:ldt j
+function! RubyHashConvertSymbolHashRocketKeysToNewSyntax()
+  normal ^xf r:ldt j
 endfunction
 
-" Ruby hash old - converts 1.9 symbol hash syntax to double quoted string and hash rocket
-map <leader>rho I"f:i"lcl =>j
+function! RubyHashConvertSymbolHashRocketKeysToStrings()
+  normal ^r"f i"j
+endfunction
 
 " Ruby open spec
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>

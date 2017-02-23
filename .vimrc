@@ -118,7 +118,7 @@ map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
 map <leader>n :call RenameFile()<cr>
 
 " RSpec let double - Convert bare word to let(:thing) { double(:thing) }
-map <leader>rld Ilet(:wviwyA) { double(:pA) }
+map <leader>rld Ilet(:<esc>wviwyA) { double(:<esc>pA) }<esc>
 
 " Ruby binding pry - insert binding.pry on the line above
 map <leader>rbp Orequire "pry"; binding.pry # DEBUG @holek<esc>

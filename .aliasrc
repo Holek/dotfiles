@@ -1,4 +1,4 @@
-alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log -f.tags'
+alias ctags-ruby='ctags -R --languages=ruby'
 
 export EDITOR=`which vim`
 

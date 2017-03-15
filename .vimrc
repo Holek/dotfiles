@@ -71,6 +71,9 @@ let g:ctrlp_use_caching = 0
 " set colorcolumn=80
 " highlight ColorColumn ctermbg=blac
 
+" Actually set marker and column for git commits
+autocmd FileType gitcommit set colorcolumn=73
+
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
@@ -95,15 +98,13 @@ au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 " Return to last edit position when opening files
-if has("autocmd")
-  function! PositionCursorFromViminfo()
-    " Do not return caret position on git's COMMIT_EDITMSG
-    if !(bufname("%") =~ '\(COMMIT_EDITMSG\)') && line("'\"") > 1 && line("'\"") <= line("$")
-      exe "normal! g`\""
-    endif
-  endfunction
-  autocmd BufReadPost * call PositionCursorFromViminfo()
-endif
+function! PositionCursorFromViminfo()
+  " Do not return caret position on git's COMMIT_EDITMSG
+  if !(bufname("%") =~ '\(COMMIT_EDITMSG\)') && line("'\"") > 1 && line("'\"") <= line("$")
+    exe "normal! g`\""
+  endif
+endfunction
+autocmd BufReadPost * call PositionCursorFromViminfo()
 
 :nnoremap { :tabprev<CR>   " Previous tab
 :nnoremap } :tabnext<CR>   " Next tab

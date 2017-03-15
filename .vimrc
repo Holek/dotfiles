@@ -262,12 +262,6 @@ endfunction
 " %% For current directory thanks @squil
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
-" Remap esc to jj in insert mode
-inoremap jj <Esc>
-
-" Remap esc to kj in insert mode
-inoremap kj <Esc>
-
 " http://vimcasts.org/episodes/show-invisibles/
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>

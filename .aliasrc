@@ -1,3 +1,4 @@
+# vim: syntax=sh
 alias ctags-ruby='ctags -R --languages=ruby'
 
 export EDITOR=`which vim`

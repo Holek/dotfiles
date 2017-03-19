@@ -13,6 +13,7 @@
   merged-branches = !git branch --merged ${1-master}
   lm = "!f() { local method=$1; local file=$2; [[ -n \"$method\" && -n \"$file\" ]] || exit 1; git lg -L :$method:$file;}; f"
   aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
+  remove-branches = "!git branch | grep -v master | grep -v \\* | xargs git branch -d"
 [diff "jpg"]
   textconv = exif
   cachetextconv = true

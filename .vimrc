@@ -63,6 +63,9 @@ let mapleader = "\<Space>"
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
 
+" Use ripgrep instead of ack
+let g:ackprg = 'rg --vimgrep'
+let g:ctrlp_user_command = 'rg --files %s'
 
 " disable Ctrl+P caching
 let g:ctrlp_use_caching = 0

@@ -66,4 +66,5 @@ brew 'vim', args: ['with-custom-ruby']
 brew 'watch'
 brew 'wget'
 brew 'youtube-dl'
+brew 'ripgrep'
 cask 'vagrant'

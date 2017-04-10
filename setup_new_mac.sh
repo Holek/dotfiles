@@ -8,11 +8,15 @@ ln -s .ctags ~/.ctags
 ln -s .gemrc ~/.gemrc
 ln -s .vimrc ~/.vimrc
 ln -s .zshrc ~/.zshrc
-ln -s gitconfig ~/.git/config
-ln -s gitattributes ~/.git/attributes
+ln -s .tmux.conf ~/.tmux.conf
+ln -s gitconfig ~/.gitconfig
+ln -s gitattributes ~/.gitattributes
+ln -s .gitignore ~/.gitignore
 
 sudo xcodebuild -license accept
 sudo xcode-select --install
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew tap Homebrew/bundle
 brew bundle
+
+tmux source-file ~/.tmux.conf

@@ -14,6 +14,7 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-obsession'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'danro/rename.vim'
 

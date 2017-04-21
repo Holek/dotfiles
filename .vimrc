@@ -17,6 +17,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-obsession'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'danro/rename.vim'
+Plugin 'Valloric/YouCompleteMe'
 
 " for general text editing
 Plugin 'tComment'

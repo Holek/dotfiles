@@ -20,3 +20,6 @@ brew tap Homebrew/bundle
 brew bundle
 
 tmux source-file ~/.tmux.conf
+
+vim +PluginInstall +qall
+(cd ~/.vim/bundle/YouCompleteMe && ./install.py --gocode-completer)

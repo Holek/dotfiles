@@ -11,11 +11,11 @@ begin
   colors = $stdout.isatty && `tput colors`.to_i > 8
 
   def pretty_msg(metric, value)
-    puts "[\e[95m#{Time.now.to_s}\e[0m] StatsD Metric: \e[34m#{metric}\e[0m \e[32m#{value}\e[0m"
+    puts "[\e[95m#{Time.now.to_s}\e[0m] \e[34m#{metric}\e[0m \e[32m#{value}\e[0m"
   end
 
   def simple_msg(metric, value)
-    puts "[#{Time.now.to_s}] StatsD Metric: #{metric} #{value}"
+    puts "[#{Time.now.to_s}] #{metric} #{value}"
   end
 
   s = UDPSocket.new

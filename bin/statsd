@@ -4,16 +4,27 @@
 #
 
 require 'socket'
-require 'term/ansicolor'
-
-include Term::ANSIColor
 
 $stdout.sync = true
 
-c = Term::ANSIColor
-s = UDPSocket.new
-s.bind(nil, 8125)
-while blob = s.recvfrom(1024)
-  metric, *value = blob.first.split(':')
-  puts "[#{c.intense_magenta(Time.now.to_s)}] StatsD Metric: #{c.blue(metric)} #{c.green(value.join(':'))}"
+begin
+  colors = $stdout.isatty && `tput colors`.to_i > 8
+
+  def pretty_msg(metric, value)
+    puts "[\e[95m#{Time.now.to_s}\e[0m] StatsD Metric: \e[34m#{metric}\e[0m \e[32m#{value}\e[0m"
+  end
+
+  def simple_msg(metric, value)
+    puts "[#{Time.now.to_s}] StatsD Metric: #{metric} #{value}"
+  end
+
+  s = UDPSocket.new
+  s.bind(nil, 8125)
+
+  while blob = s.recvfrom(2048)
+    metric, value = blob.first.split(':', 2)
+    colors ? pretty_msg(metric, value) : simple_msg(metric, value)
+  end
+rescue SystemExit, Interrupt
+  exit!
 end

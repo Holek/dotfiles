@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+#
+# vim: set ft=ruby
+#
+
+require 'socket'
+require 'term/ansicolor'
+
+include Term::ANSIColor
+
+$stdout.sync = true
+
+c = Term::ANSIColor
+s = UDPSocket.new
+s.bind(nil, 8125)
+while blob = s.recvfrom(1024)
+  metric, *value = blob.first.split(':')
+  puts "[#{c.intense_magenta(Time.now.to_s)}] StatsD Metric: #{c.blue(metric)} #{c.green(value.join(':'))}"
+end

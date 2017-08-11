@@ -30,3 +30,5 @@ tmux source-file ~/.tmux.conf
 echo "Installing vim plugins"
 vim +PluginInstall +qall
 (cd ~/.vim/bundle/YouCompleteMe && ./install.py --gocode-completer)
+
+ln -s `pwd`/bin/statsd /usr/local/bin/statsd

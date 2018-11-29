@@ -28,7 +28,6 @@ git help -a | grep "^  [a-z]" | while read line; do
   done
 done
 unsetopt sh_word_split
-unalias bundle
 
 # http://superuser.com/a/611582
 function stopwatch(){

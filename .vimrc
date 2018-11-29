@@ -131,6 +131,9 @@ map <leader>rld Ilet(:<esc>wviwyA) { double(:<esc>pA) }<esc>
 " Ruby binding pry - insert binding.pry on the line above
 map <leader>rbp Orequire "pry"; binding.pry # DEBUG @holek<esc>
 
+" Python interactive debug shell on the line above
+map <leader>rpp Oimport code; code.interact(local=dict(globals(), **locals())) # DEBUG @holek<esc>
+
 " Ruby tap and pry
 map <leader>rtp o.tap { \|o\| "DEBUG @holek"; require "pry"; binding.pry }<esc>
 
@@ -325,6 +328,10 @@ au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile setlocal spell
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
+
+au BufNewFile,BufRead Herdfile.*.lock set ft=yaml
+au BufRead,BufNewFile Jenkinsfile set filetype=groovy
+au BufRead,BufNewFile Dockerfile.* set filetype=Dockerfile
 
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

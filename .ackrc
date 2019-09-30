@@ -1,6 +1,9 @@
 --ignore-dir=tmp
 --ignore-dir=.idea
 --ignore-dir=.env
+--ignore-dir=.venv
+--ignore-dir=.direnv
+--ignore-dir=venv
 --ignore-dir=node_modules
 --ignore-dir=b
 --ignore-dir=coverage

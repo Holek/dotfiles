@@ -19,7 +19,7 @@ alias gdci="git duet-commit"
 alias gci="git commit"
 
 setopt sh_word_split
-git help -a | grep "^  [a-z]" | while read line; do
+git help -ai | grep -E "^(\s+)[a-z]" | awk '{print $1}' | while read line; do
   for word in $line
   do
     if ! type "$word" > /dev/null; then
@@ -44,3 +44,4 @@ function countdown(){
   sleep 0.1
     done
 }
+export PATH="/Users/holek/bin:$PATH"

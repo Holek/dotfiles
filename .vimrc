@@ -11,25 +11,31 @@ Plugin 'ctrlp.vim'
 Plugin 'ack.vim'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-dispatch'
-Plugin 'vim-ruby/vim-ruby'
+"Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-obsession'
+Plugin 'fatih/vim-go'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'danro/rename.vim'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'w0rp/ale'
+Plugin 'thiagoalessio/rainbow_levels.vim'
+Plugin 'slashmili/alchemist.vim'
+Plugin 'elixir-editors/vim-elixir'
 
 " for general text editing
 Plugin 'tComment'
 Plugin 'endwise.vim'
 Plugin 'surround.vim'
 Plugin 'abolish.vim'
+Plugin 'majutsushi/tagbar'
 
 " language specific
 Plugin 'haskell.vim'
 Plugin 'vim-coffee-script'
+" Plugin 'ensime/ensime-vim'
 
 call vundle#end()
 
@@ -60,6 +66,15 @@ set background=light
 set t_Co=256                        " force vim to use 256 colors
 let g:solarized_termcolors=256      " use solarized 256 fallback
 colorscheme solarized
+let g:rainbow_levels = [
+    \{'ctermfg': 2, 'guifg': '#859900'},
+    \{'ctermfg': 6, 'guifg': '#2aa198'},
+    \{'ctermfg': 4, 'guifg': '#268bd2'},
+    \{'ctermfg': 5, 'guifg': '#6c71c4'},
+    \{'ctermfg': 1, 'guifg': '#dc322f'},
+    \{'ctermfg': 3, 'guifg': '#b58900'},
+    \{'ctermfg': 8, 'guifg': '#839496'},
+    \{'ctermfg': 7, 'guifg': '#586e75'}]
 
 " Leader space
 let mapleader = "\<Space>"
@@ -73,6 +88,35 @@ let g:ctrlp_user_command = 'rg --files %s'
 
 " disable Ctrl+P caching
 let g:ctrlp_use_caching = 0
+
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_type_go = {
+  \ 'ctagstype' : 'go',
+  \ 'kinds'     : [
+    \ 'p:package',
+    \ 'i:imports:1',
+    \ 'c:constants',
+    \ 'v:variables',
+    \ 't:types',
+    \ 'n:interfaces',
+    \ 'w:fields',
+    \ 'e:embedded',
+    \ 'm:methods',
+    \ 'r:constructor',
+    \ 'f:functions'
+  \ ],
+  \ 'sro' : '.',
+  \ 'kind2scope' : {
+    \ 't' : 'ctype',
+    \ 'n' : 'ntype'
+  \ },
+  \ 'scope2kind' : {
+    \ 'ctype' : 't',
+    \ 'ntype' : 'n'
+  \ },
+  \ 'ctagsbin'  : 'gotags',
+  \ 'ctagsargs' : '-sort -silent'
+\ }
 
 " set vertical marker at col 80
 " set colorcolumn=80
@@ -117,6 +161,8 @@ autocmd BufReadPost * call PositionCursorFromViminfo()
 :nnoremap } :tabnext<CR>   " Next tab
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
+
+map <leader>rl :RainbowLevelsToggle<cr>
 
 " Open and reload vimrc
 map <leader>vrc :edit $MYVIMRC<cr>
@@ -318,7 +364,7 @@ command! WQ wq " Bind :WQ to :wq
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Guardfile,Rakefile,Vagrantfile,Thorfile,config.ru} set filetype=ruby
+au BufRead,BufNewFile {Gemfile,Guardfile,Rakefile,Vagrantfile,Thorfile,config.ru,Herdfile} set filetype=ruby
 
 " md, markdown, and mk are markdown and define buffer-local preview
 au BufRead,BufNewFile *.{md,markdown} set filetype=markdown
@@ -330,6 +376,7 @@ au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile setlocal spell
 au BufNewFile,BufRead *.json set ft=javascript
 
 au BufNewFile,BufRead Herdfile.*.lock set ft=yaml
+au BufNewFile,BufRead Oyafile set ft=yaml
 au BufRead,BufNewFile Jenkinsfile set filetype=groovy
 au BufRead,BufNewFile Dockerfile.* set filetype=Dockerfile
 

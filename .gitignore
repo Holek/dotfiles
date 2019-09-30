@@ -1,5 +1,6 @@
 .tags
 .DS_Store
 Session.vim
-.env
 .idea
+.direnv/
+.envrc

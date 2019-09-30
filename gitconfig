@@ -37,10 +37,16 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 [commit]
 	verbose = true
+	gpgsign = true
 [core]
 	editor = /usr/local/bin/vim
 	excludesfile = ~/.gitignore
 [url "git@github.com:"]
 	insteadOf = gh:
+[sequence]
+	editor = interactive-rebase-tool
+[color]
+	ui = auto

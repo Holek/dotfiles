@@ -4,16 +4,16 @@ echo "Installing Oh-My-ZSH"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 echo "Aliasing dotfiles"
-ln -s .ackrc ~/.ackrc
-ln -s .aliasrc ~/.aliasrc
-ln -s .ctags ~/.ctags
-ln -s .gemrc ~/.gemrc
-ln -s .vimrc ~/.vimrc
-ln -s .zshrc ~/.zshrc
-ln -s .tmux.conf ~/.tmux.conf
-ln -s gitconfig ~/.gitconfig
-ln -s gitattributes ~/.gitattributes
-ln -s .gitignore ~/.gitignore
+ln -s `pwd`/.ackrc ~/.ackrc
+ln -s `pwd`/.aliasrc ~/.aliasrc
+ln -s `pwd`/.ctags ~/.ctags
+ln -s `pwd`/.gemrc ~/.gemrc
+ln -s `pwd`/.vimrc ~/.vimrc
+ln -s `pwd`/.zshrc ~/.zshrc
+ln -s `pwd`/.tmux.conf ~/.tmux.conf
+ln -s `pwd`/gitconfig ~/.gitconfig
+ln -s `pwd`/gitattributes ~/.gitattributes
+ln -s `pwd`/.gitignore ~/.gitignore
 
 echo "Accepting XCode license and installing it to install Homebrew"
 sudo xcodebuild -license accept
@@ -28,6 +28,7 @@ echo "sourcing tmux config"
 tmux source-file ~/.tmux.conf
 
 echo "Installing vim plugins"
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 (cd ~/.vim/bundle/YouCompleteMe && ./install.py --gocode-completer)
 

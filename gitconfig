@@ -1,6 +1,7 @@
 [user]
   name  = "Michał Połtyn"
-  email = michal.poltyn@tooploox.com
+  email = michal@poltyn.com
+  signingkey = 4DE43032E8991E4A
 [push]
   default = current
 [alias]
@@ -50,3 +51,5 @@
 	editor = interactive-rebase-tool
 [color]
 	ui = auto
+[includeIf "gitdir:/Users/michalpoltyn/ro/"]
+	path = /Users/michalpoltyn/ro/.gitconfig

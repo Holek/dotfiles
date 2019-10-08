@@ -13,7 +13,10 @@ alias glg="git log"
 alias g=git
 alias master="git checkout master"
 alias develop="git checkout develop"
+alias gco="git checkout"
 alias gcob="git checkout -b"
+alias gst="git status"
+alias grb="git rebase"
 
 alias gdci="git duet-commit"
 alias gci="git commit"

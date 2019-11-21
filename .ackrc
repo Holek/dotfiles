@@ -1,6 +1,7 @@
 --ignore-dir=tmp
 --ignore-dir=.idea
 --ignore-dir=.env
+--ignore-dir=.tox
 --ignore-dir=.venv
 --ignore-dir=.direnv
 --ignore-dir=venv

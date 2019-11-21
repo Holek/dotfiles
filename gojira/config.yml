@@ -1,0 +1,44 @@
+endpoint: https://PROJECT.atlassian.net
+project: PROJECT NAME
+login: HOLEK@COMPANY_MAIL.CO
+password-source: keyring
+issuetype: Story
+custom-commands:
+  - name: mine
+    help: display issues assigned to me
+    script: |-
+      {{jira}} list --query "resolution = unresolved and assignee=currentuser() ORDER BY created"
+  - name: sprint
+    help: display issues for active sprint
+    script: |-
+      if [ -n "$JIRA_PROJECT" ]; then
+          # if `project: ...` configured just list the issues for current project
+          {{jira}} list --template table --query "sprint in openSprints() and type != epic and resolution = unresolved and project=$JIRA_PROJECT ORDER BY rank asc, created"
+      else
+          # otherwise list issues for all project
+          echo "\"project: ...\" configuration missing from .jira.d/config.yml"
+      fi
+  - name: branch
+    help: create git branch based on a ticket info
+    args:
+      - name: issue
+        required: true
+    script: |-
+      set -e
+      export JSON=`{{jira}} view --field=issue,summary,issuetype -tjson {{args.issue}}`
+      export BRANCH=`ruby -rjson \
+        -e'jira=JSON.load(ENV["JSON"])' \
+        -e'prefix=jira.dig("fields", "issuetype", "name") == "Story" ? "feature/" : "bug/"' \
+        -e'suffix="#{jira.fetch("key").strip}-#{jira.dig("fields", "summary").downcase.strip.gsub(/[^0-9a-z_]/, "-").gsub(/\-+/, "-").gsub(/^\-*/, "").gsub(/\-*$/, "")}"' \
+        -e'puts "#{prefix}#{suffix}"'`
+      git checkout -b $BRANCH
+
+  - name: epicstories
+    help: List stories assigned to an epic
+    args:
+      - name: issue
+        required: true
+      - name: MORE
+        repeat: true
+    script: |-
+      {{jira}} list --query '"Epic Link" = {{args.issue}}'{{range $more := args.MORE}} {{$more}}{{end}}

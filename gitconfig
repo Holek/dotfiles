@@ -45,6 +45,7 @@
 [core]
 	editor = /usr/local/bin/vim
 	excludesfile = ~/.gitignore
+  pager = less -FRX
 [url "git@github.com:"]
 	insteadOf = gh:
 [sequence]
@@ -53,3 +54,9 @@
 	ui = auto
 [includeIf "gitdir:/Users/michalpoltyn/ro/"]
 	path = /Users/michalpoltyn/ro/.gitconfig
+[trailer "coauthor"]
+	key = "Co-authored-by: "
+	ifmissing = add
+	ifexists = add
+[advice]
+	detachedHead = false

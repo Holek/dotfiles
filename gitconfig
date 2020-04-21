@@ -16,6 +16,7 @@
   aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
   remove-branches = "!git branch | grep -v master | grep -v \\* | xargs git branch -d"
   really-remove-branches = "!git branch | grep -v master | grep -v \\* | xargs git branch -D"
+	ack = -c color.grep.linenumber=\"bold yellow\"\n    -c color.grep.filename=\"bold green\"\n    -c color.grep.match=\"reverse yellow\"\n    grep --break --heading --line-number
 [diff "jpg"]
   textconv = exif
   cachetextconv = true

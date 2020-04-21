@@ -28,7 +28,7 @@ custom-commands:
       export JSON=`{{jira}} view --field=issue,summary,issuetype -tjson {{args.issue}}`
       export BRANCH=`ruby -rjson \
         -e'jira=JSON.load(ENV["JSON"])' \
-        -e'prefix=jira.dig("fields", "issuetype", "name") == "Story" ? "feature/" : "bug/"' \
+        -e'prefix=jira.dig("fields", "issuetype", "name") == "Story" ? "feature/" : "#{jira.dig("fields", "issuetype", "name").downcase}/"' \
         -e'suffix="#{jira.fetch("key").strip}-#{jira.dig("fields", "summary").downcase.strip.gsub(/[^0-9a-z_]/, "-").gsub(/\-+/, "-").gsub(/^\-*/, "").gsub(/\-*$/, "")}"' \
         -e'puts "#{prefix}#{suffix}"'`
       git checkout -b $BRANCH

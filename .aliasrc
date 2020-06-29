@@ -23,6 +23,8 @@ alias gci="git commit"
 
 alias reqs="pip install -r requirements.txt"
 
+alias tf=terraform
+
 setopt sh_word_split
 git help -ai | grep -E "^(\s+)[a-z]" | awk '{print $1}' | while read line; do
   for word in $line

@@ -1,7 +1,7 @@
 [user]
   name  = "Michał Połtyn"
   email = michal@poltyn.com
-  signingkey = 4DE43032E8991E4A
+  signingkey = 79E0B9829490BB35
 [push]
   default = current
 [alias]
@@ -17,22 +17,10 @@
   remove-branches = "!git branch | grep -v master | grep -v \\* | xargs git branch -d"
   really-remove-branches = "!git branch | grep -v master | grep -v \\* | xargs git branch -D"
 	ack = -c color.grep.linenumber=\"bold yellow\"\n    -c color.grep.filename=\"bold green\"\n    -c color.grep.match=\"reverse yellow\"\n    grep --break --heading --line-number
-[diff "jpg"]
-  textconv = exif
+[diff "image"]
+  textconv = identify -verbose
   cachetextconv = true
-[diff "mp4"]
-  textconv = mplayer -vo null -ao null -frames 0 -identify
-  cachetextconv = true
-[diff "avi"]
-  textconv = mplayer -vo null -ao null -frames 0 -identify
-  cachetextconv = true
-[diff "flv"]
-  textconv = mplayer -vo null -ao null -frames 0 -identify
-  cachetextconv = true
-[diff "mov"]
-  textconv = mplayer -vo null -ao null -frames 0 -identify
-  cachetextconv = true
-[diff "mkv"]
+[diff "video"]
   textconv = mplayer -vo null -ao null -frames 0 -identify
   cachetextconv = true
 [filter "lfs"]

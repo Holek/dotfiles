@@ -1,1 +1,15 @@
-*.rb diff=ruby
+*.mp4 diff=video
+*.avi diff=video
+*.flv diff=video
+*.mkv diff=video
+*.mov diff=video
+*.webm diff=video
+*.jpg diff=image
+*.jpeg diff=image
+*.gif diff=image
+*.tiff diff=image
+*.tif diff=image
+*.bmp diff=image
+*.jpe diff=image
+*.png diff=image
+*.pneg diff=image

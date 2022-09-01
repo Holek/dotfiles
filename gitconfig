@@ -36,6 +36,7 @@
 	excludesfile = ~/.gitignore
   pager = less -FRX
 	attributesfile = ~/.gitattributes
+	fsmonitor = true
 [url "git@github.com:"]
 	insteadOf = gh:
 [sequence]
@@ -50,3 +51,6 @@
 	ifexists = add
 [advice]
 	detachedHead = false
+	addEmptyPathspec = false
+[init]
+	defaultBranch = main

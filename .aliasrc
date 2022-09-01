@@ -1,7 +1,7 @@
 # vim: syntax=sh
 alias ctags-ruby='ctags -R --languages=ruby'
 
-export EDITOR=`which vim`
+export EDITOR=`which nvim`
 
 alias b=bundle
 alias bi="bundle install"
@@ -13,6 +13,7 @@ alias glg="git log"
 alias g=git
 alias master="git checkout master"
 alias develop="git checkout develop"
+alias dev="git checkout dev"
 alias gco="git checkout"
 alias gcob="git checkout -b"
 alias gst="git status"
@@ -26,7 +27,7 @@ alias reqs="pip install -r requirements.txt"
 alias tf=terraform
 
 setopt sh_word_split
-git help -ai | grep -E "^(\s+)[a-z]" | awk '{print $1}' | while read line; do
+git help -a | grep -E "^(\s+)[a-z]" | awk '{print $1}' | while read line; do
   for word in $line
   do
     if ! type "$word" > /dev/null; then

@@ -1,20 +1,20 @@
 """ Vundle """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype off
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+let g:airline_theme='deep_space'
 " for the editor itself
 Plugin 'gmarik/Vundle.vim'
-Plugin 'Solarized'
 Plugin 'ctrlp.vim'
+" Plugin 'Solarized'
+Plugin 'tyrannicaltoucan/vim-deep-space'
 Plugin 'ack.vim'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-dispatch'
-"Plugin 'vim-ruby/vim-ruby'
+" Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rvm'
-Plugin 'tpope/vim-fugitive'
+" Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-obsession'
 Plugin 'fatih/vim-go'
 Plugin 'airblade/vim-gitgutter'
@@ -24,6 +24,7 @@ Plugin 'w0rp/ale'
 Plugin 'thiagoalessio/rainbow_levels.vim'
 Plugin 'slashmili/alchemist.vim'
 Plugin 'elixir-editors/vim-elixir'
+Plugin 'github/copilot.vim'
 
 " for general text editing
 Plugin 'tComment'
@@ -40,6 +41,8 @@ Plugin 'vim-coffee-script'
 call vundle#end()
 
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 set nocompatible
 syntax on
@@ -59,22 +62,28 @@ set tags=.tags
 
 filetype plugin indent on
 " solarized options
-let g:solarized_termtrans=1
-let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
-set background=light
-set t_Co=256                        " force vim to use 256 colors
-let g:solarized_termcolors=256      " use solarized 256 fallback
-colorscheme solarized
-let g:rainbow_levels = [
-    \{'ctermfg': 2, 'guifg': '#859900'},
-    \{'ctermfg': 6, 'guifg': '#2aa198'},
-    \{'ctermfg': 4, 'guifg': '#268bd2'},
-    \{'ctermfg': 5, 'guifg': '#6c71c4'},
-    \{'ctermfg': 1, 'guifg': '#dc322f'},
-    \{'ctermfg': 3, 'guifg': '#b58900'},
-    \{'ctermfg': 8, 'guifg': '#839496'},
-    \{'ctermfg': 7, 'guifg': '#586e75'}]
+" let g:solarized_termtrans=1
+" let g:solarized_visibility = "high"
+" let g:solarized_contrast = "high"
+"
+" set background=light
+" let g:solarized_termcolors=256      " use solarized 256 fallback
+" colorscheme solarized
+" let g:rainbow_levels = [
+"     \{'ctermfg': 2, 'guifg': '#859900'},
+"     \{'ctermfg': 6, 'guifg': '#2aa198'},
+"     \{'ctermfg': 4, 'guifg': '#268bd2'},
+"     \{'ctermfg': 5, 'guifg': '#6c71c4'},
+"     \{'ctermfg': 1, 'guifg': '#dc322f'},
+"     \{'ctermfg': 3, 'guifg': '#b58900'},
+"     \{'ctermfg': 8, 'guifg': '#839496'},
+"     \{'ctermfg': 7, 'guifg': '#586e75'}]
+
+
+set background=dark
+set termguicolors
+let g:deepspace_italics=1
+colorscheme deep-space
 
 " Leader space
 let mapleader = "\<Space>"

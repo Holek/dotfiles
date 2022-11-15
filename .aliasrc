@@ -53,3 +53,5 @@ function countdown(){
     done
 }
 export PATH="/Users/holek/bin:$PATH"
+
+alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql

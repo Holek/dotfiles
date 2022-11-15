@@ -52,5 +52,6 @@
 [advice]
 	detachedHead = false
 	addEmptyPathspec = false
+	skippedCherryPicks = false
 [init]
 	defaultBranch = main

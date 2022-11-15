@@ -5,23 +5,24 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 echo "Aliasing dotfiles"
 local pwd="$(command pwd)"
-ln -s "${pwd}/.ackrc" ~/.ackrc
-ln -s "${pwd}/.aliasrc" ~/.aliasrc
-ln -s "${pwd}/.ctags" ~/.ctags
-ln -s "${pwd}/.gemrc" ~/.gemrc
-ln -s "${pwd}/.vimrc" ~/.vimrc
-ln -s "${pwd}/.zshrc" ~/.zshrc
-ln -s "${pwd}/.tmux".conf ~/.tmux.conf
-ln -s "${pwd}/gitconfig" ~/.gitconfig
-ln -s "${pwd}/gitattributes" ~/.gitattributes
-ln -s "${pwd}/.gitignore" ~/.gitignore
-ln -s "${pwd}/robbyrussell-mine.zsh-theme" "${HOME}/.oh-my-zsh/custom/robbyrussell-mine.zsh-theme"
+(PWD="`pwd`" cd $HOME &&
+  ln -s "${PWD}/.ackrc"  &&
+ln -s "${PWD}/.aliasrc" &&
+ln -s "${PWD}/.ctags" &&
+ln -s "${PWD}/.gemrc" &&
+ln -s "${PWD}/.vimrc" &&
+ln -s "${PWD}/.zshrc" &&
+ln -s "${PWD}/.tmux".conf &&
+ln -s "${PWD}/gitconfig" .gitconfig &&
+ln -s "${PWD}/gitattributes" .gitattributes &&
+ln -s "${PWD}/.gitignore")
+#ln -s "${PWD}/robbyrussell-mine.zsh-theme" "${HOME}/.oh-my-zsh/custom/robbyrussell-mine.zsh-theme"
 
 echo "Accepting XCode license and installing it to install Homebrew"
 sudo xcodebuild -license accept
 sudo xcode-select --install
 echo "Installing Homebrew"
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 echo "Installing brew formulas from Brewfile"
 brew tap Homebrew/bundle
 brew bundle

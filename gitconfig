@@ -32,7 +32,6 @@
 	verbose = true
 	gpgsign = true
 [core]
-	editor = /usr/local/bin/vim
 	excludesfile = ~/.gitignore
   pager = less -FRX
 	attributesfile = ~/.gitattributes

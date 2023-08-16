@@ -38,5 +38,7 @@ vim +PluginInstall +qall
 ln -s "${pwd}/bin/statsd" /usr/local/bin/statsd
 touch ~/.hushlogin
 
-echo "git clone git@github.com:bric3/nice-exit-code.git \$ZSH_CUSTOM/plugins/nice-exit-code"
+echo "git clone git@github.com:bric3/nice-exit-code.git ~/.oh-my-zsh/custom/plugins/nice-exit-code
+git clone https://github.com/buonomo/yarn-extra-completion ~/.oh-my-zsh/custom/plugins/yarn-extra-completion
+"
 

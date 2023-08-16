@@ -12,8 +12,23 @@ alias gdf="git diff"
 alias glg="git log"
 alias g=git
 alias master="git checkout master"
-alias develop="git checkout develop"
-alias dev="git checkout dev"
+
+# function to find a suitable develop branch in git.
+# Possible branches are: dev, develop, sandbox, master
+# Check out current branch first, then check out branches from the list
+function gdev() {
+  local branch
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  if [[ $branch =~ ^(dev|develop|sandbox|master)$ ]]; then
+    #echo "Already on a develop branch"
+  else
+    for branch in dev develop sandbox master; do
+      git checkout $branch 2>/dev/null && break
+    done
+  fi
+}
+alias dev=gdev
+
 alias gco="git checkout"
 alias gcob="git checkout -b"
 alias gst="git status"
@@ -40,14 +55,14 @@ unsetopt sh_word_split
 # http://superuser.com/a/611582
 function stopwatch(){
   date1=`gdate +%s`;
-  while true; do 
-    echo -ne "$(gdate -u --date @$((`gdate +%s` - $date1)) +%H:%M:%S)\r"; 
+  while true; do
+    echo -ne "$(gdate -u --date @$((`gdate +%s` - $date1)) +%H:%M:%S)\r";
   sleep 0.1
     done
 }
 function countdown(){
-  date1=$((`gdate +%s` + $1)); 
-  while [ "$date1" -ge `gdate +%s` ]; do 
+  date1=$((`gdate +%s` + $1));
+  while [ "$date1" -ge `gdate +%s` ]; do
     echo -ne "$(gdate -u --date @$(($date1 - `gdate +%s`)) +%H:%M:%S)\r";
   sleep 0.1
     done
@@ -55,3 +70,6 @@ function countdown(){
 export PATH="/Users/holek/bin:$PATH"
 
 alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
+
+eval "$(jira --completion-script-zsh)"
+eval "$(github-copilot-cli alias -- "$0")"

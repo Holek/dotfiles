@@ -19,8 +19,26 @@ alias master="git checkout master"
 function gdev() {
   local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
-  if [[ $branch =~ ^(dev|develop|sandbox|master)$ ]]; then
-    #echo "Already on a develop branch"
+  if [[ $branch =~ ^(dev|develop|sandbox|staging|master|main)$ ]]; then
+    # switch between these branches
+    # but check if they exist first
+    case $branch in
+      dev)
+        git checkout develop || git checkout sandbox || git checkout staging || git checkout master || git checkout main
+        ;;
+      develop)
+        git checkout sandbox || git checkout staging || git checkout master || git checkout main
+      ;;
+      sandbox)
+        git checkout staging || git checkout master || git checkout main
+      ;;
+      staging)
+        git checkout master || git checkout main
+      ;;
+      master|main)
+        git checkout sandbox || git checkout dev || git checkout develop || git checkout staging
+      ;;
+    esac
   else
     for branch in dev develop sandbox master; do
       git checkout $branch 2>/dev/null && break

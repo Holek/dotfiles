@@ -18,8 +18,11 @@ begin
     puts "[#{Time.now.to_s}] #{metric} #{value}"
   end
 
+  # get port from arg
+  port = ARGV[0] || 8125
+
   s = UDPSocket.new
-  s.bind(nil, 8125)
+  s.bind(nil, port)
 
   while blob = s.recvfrom(10240)
     metric, value = blob.first.split(':', 2)

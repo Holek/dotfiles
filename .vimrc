@@ -7,7 +7,6 @@ let g:airline_theme='deep_space'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'ctrlp.vim'
 " Plugin 'Solarized'
-Plugin 'tyrannicaltoucan/vim-deep-space'
 Plugin 'ack.vim'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-dispatch'
@@ -38,6 +37,9 @@ Plugin 'haskell.vim'
 Plugin 'vim-coffee-script'
 " Plugin 'ensime/ensime-vim'
 
+Plugin 'tyrannicaltoucan/vim-deep-space'
+Plugin 'jparise/vim-graphql'
+
 call vundle#end()
 
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -67,7 +69,8 @@ filetype plugin indent on
 " let g:solarized_contrast = "high"
 "
 " set background=light
-" let g:solarized_termcolors=256      " use solarized 256 fallback
+" let g:solarized_termcolors=256    
+" use solarized 256 fallback
 " colorscheme solarized
 " let g:rainbow_levels = [
 "     \{'ctermfg': 2, 'guifg': '#859900'},
@@ -194,28 +197,6 @@ map <leader>rtp o.tap { \|o\| "DEBUG @holek"; require "pry"; binding.pry }<esc>
 
 " Ruby no pry - remove a binding.pry from the current file, hope it's the one you wanted
 map <leader>rnp /binding.pry<cr>dd:noh
-
-" Convert Ruby hash keys, works with visual selection
-" Works with single quotes too.
-map <leader>rhn :call RubyHashConvertStringKeysToNewSyntax()<cr>
-map <leader>rho :call RubyHashConvertNewSyntaxKeysToStrings()<cr>
-map <leader>rh19 :call RubyHashConvertSymbolKeysToNewSyntax()<cr>
-
-function! RubyHashConvertStringKeysToNewSyntax()
-  normal ^xf=dwbr:j
-endfunction
-
-function! RubyHashConvertNewSyntaxKeysToStrings()
-  normal I"f:i"lcl =>j
-endfunction
-
-function! RubyHashConvertSymbolHashRocketKeysToNewSyntax()
-  normal ^xf r:ldt j
-endfunction
-
-function! RubyHashConvertSymbolHashRocketKeysToStrings()
-  normal ^r"f i"j
-endfunction
 
 " Ruby open spec
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>

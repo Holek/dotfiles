@@ -40,7 +40,7 @@ function gdev() {
       ;;
     esac
   else
-    for branch in dev develop sandbox master; do
+    for branch in dev develop sandbox master main; do
       git checkout $branch 2>/dev/null && break
     done
   fi
@@ -90,4 +90,3 @@ export PATH="/Users/holek/bin:$PATH"
 alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
 
 eval "$(jira --completion-script-zsh)"
-eval "$(github-copilot-cli alias -- "$0")"

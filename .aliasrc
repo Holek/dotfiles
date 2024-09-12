@@ -13,39 +13,76 @@ alias glg="git log"
 alias g=git
 alias master="git checkout master"
 
-# function to find a suitable develop branch in git.
-# Possible branches are: dev, develop, sandbox, master
-# Check out current branch first, then check out branches from the list
-function gdev() {
-  local branch
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  if [[ $branch =~ ^(dev|develop|sandbox|staging|master|main)$ ]]; then
-    # switch between these branches
-    # but check if they exist first
-    case $branch in
-      dev)
-        git checkout develop || git checkout sandbox || git checkout staging || git checkout master || git checkout main
-        ;;
-      develop)
-        git checkout sandbox || git checkout staging || git checkout master || git checkout main
-      ;;
-      sandbox)
-        git checkout staging || git checkout master || git checkout main
-      ;;
-      staging)
-        git checkout master || git checkout main
-      ;;
-      master|main)
-        git checkout sandbox || git checkout dev || git checkout develop || git checkout staging
-      ;;
-    esac
-  else
-    for branch in dev develop sandbox master main; do
-      git checkout $branch 2>/dev/null && break
+# Variable to store the created aliases
+GIT_BRANCH_ALIASES=()
+# Variable to store the names of aliases that were not created due to conflicts
+GIT_BRANCH_CONFLICTS=()
+
+# Function to generate aliases for git branches
+generate_git_aliases() {
+  local branches
+  branches=$(git branch --format='%(refname:short)' 2>/dev/null)
+
+  # Check if inside a git repository
+  if [ $? -ne 0 ]; then
+    return
+  fi
+
+  # Remove existing branch aliases
+  unset_branches
+
+  # Clear conflicts from the previous run
+  GIT_BRANCH_CONFLICTS=()
+
+  # Create aliases for each branch
+  echo "$branches" | while IFS= read -r branch; do
+    # Extract the last part of the branch name for alias
+    local alias_name=${branch##*/}
+
+    # Check if a command with the same name already exists
+    if command -v $alias_name >/dev/null 2>&1; then
+      # Store conflicts and continue to next branch
+      GIT_BRANCH_CONFLICTS+=($alias_name)
+      continue
+    fi
+
+    # Create alias and add it to the list of tracked aliases
+    alias $alias_name="git checkout '$branch'"
+    GIT_BRANCH_ALIASES+=($alias_name)
+  done
+
+  # Report any conflicts
+  if [ ${#GIT_BRANCH_CONFLICTS[@]} -gt 0 ]; then
+    echo "The following aliases were not created due to conflicts with existing commands:"
+    for conflict in "${GIT_BRANCH_CONFLICTS[@]}"; do
+      echo "- $conflict"
     done
   fi
 }
-alias dev=gdev
+
+# Function to remove all dynamically created aliases
+unset_branches() {
+  # Loop over stored aliases and remove them
+  for alias_name in "${GIT_BRANCH_ALIASES[@]}"; do
+    unalias $alias_name
+  done
+
+  # Clear the alias list
+  GIT_BRANCH_ALIASES=()
+}
+
+# Hook function to run every time the directory changes
+function chpwd() {
+  if git rev-parse --is-inside-work-tree &>/dev/null; then
+    generate_git_aliases
+  else
+    unset_branches
+  fi
+}
+
+# Initial alias generation
+chpwd
+
 
 alias gco="git checkout"
 alias gcob="git checkout -b"

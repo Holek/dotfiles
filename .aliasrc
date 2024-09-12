@@ -123,7 +123,4 @@ function countdown(){
     done
 }
 export PATH="/Users/holek/bin:$PATH"
-
-alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
-
-eval "$(jira --completion-script-zsh)"
+source <(fzf --zsh)

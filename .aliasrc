@@ -53,10 +53,9 @@ generate_git_aliases() {
 
   # Report any conflicts
   if [ ${#GIT_BRANCH_CONFLICTS[@]} -gt 0 ]; then
-    echo "The following aliases were not created due to conflicts with existing commands:"
-    for conflict in "${GIT_BRANCH_CONFLICTS[@]}"; do
-      echo "- $conflict"
-    done
+    >&2 echo "The following aliases were not created due to conflicts with existing commands:"
+
+    >&2 echo "${GIT_BRANCH_CONFLICTS[*]}"
   fi
 }
 

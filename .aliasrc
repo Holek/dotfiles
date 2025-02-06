@@ -96,10 +96,11 @@ alias reqs="pip install -r requirements.txt"
 alias tf=terraform
 
 setopt sh_word_split
-git help -a | grep -E "^(\s+)[a-z]" | awk '{print $1}' | while read line; do
+git help -a | grep -E "^(\s+)[a-z]" | awk '{print $1}' | grep -v bundle | while read line; do
   for word in $line
   do
-    if ! type "$word" > /dev/null; then
+    # Check if alias already exists or bundle
+    if ! type "$word" > /dev/null ; then
       alias $word="git ${word}"
     fi
   done

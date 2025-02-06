@@ -1,6 +1,6 @@
 ZSH_THEME="robbyrussell-mine"
 
-plugins=(gitfast rails ruby docker osx encode64 gem ssh-agent tig tmux asdf python)
+plugins=(gitfast rails ruby docker ubuntu encode64 gem ssh-agent tig tmux asdf python)
 
 ssh-add -K 2> /dev/null
 

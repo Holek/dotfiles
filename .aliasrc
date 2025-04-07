@@ -123,4 +123,6 @@ function countdown(){
     done
 }
 export PATH="/Users/holek/bin:$PATH"
+
 source <(fzf --zsh)
+source "$HOME/dotfiles/fzf-git.sh"

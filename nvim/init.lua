@@ -107,6 +107,24 @@ require("packer").startup(function(use)
   use "numToStr/Comment.nvim"       -- Easily (un)comment code
   use "tpope/vim-surround"          -- Surround text objects easily
 
+  use({
+    'MeanderingProgrammer/render-markdown.nvim',
+    after = { 'nvim-treesitter' },
+    -- requires = { 'echasnovski/mini.nvim', opt = true }, -- if you use the mini.nvim suite
+    -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+    config = function()
+      require('render-markdown').setup({
+        completions = { lsp = { enabled = true } },
+      })
+    end,
+  })
+
+  use({
+    'folke/zen-mode.nvim',
+    
+  })
+
   -------------------------------------------
   -- Session/Project Management
   -------------------------------------------
@@ -148,7 +166,7 @@ require("packer").startup(function(use)
   -----------------
   -- Colorscheme --
   -----------------
-  use "lifepillar/vim-solarized8"
+  use "morhetz/gruvbox"
 
   -- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
@@ -164,7 +182,8 @@ local o, opt = vim.o, vim.opt
 -- Use true colors and a nice color scheme.
 vim.o.termguicolors = true
 vim.opt.background = "dark"
-vim.cmd("colorscheme solarized8")
+vim.cmd("colorscheme gruvbox")
+
 
 -- Line numbers & relative numbers.
 o.number = true
@@ -211,15 +230,38 @@ require("lualine").setup({
   }
 })
 
+-- Zen Mode (distraction-free writing)
+require("zen-mode").setup({
+  window = {
+    width = 0.8,
+    height = 0.9,
+    options = {
+      signcolumn = "no",
+      number = false,
+      relativenumber = false,
+      foldcolumn = "0",
+      list = false,
+    },
+  },
+  plugins = {
+    tmux = { enabled = true },
+    kitty = { enabled = true, font = "+8" },
+  }
+})
+-- Make sure CTRL+W Z toggles Zen Mode
+vim.keymap.set("n", "<C-w>z", function()
+  require("zen-mode").toggle()
+end, { desc = "Toggle Zen Mode" })
+
 -- Nvim-tree (file explorer)
 require("nvim-tree").setup({})
 
--- Telescope
+-- Telescope keymaps with mnemonics
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Grep files" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "List buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find help tags" })
+vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
+vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind by [G]rep" })
+vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "[F]ind [B]uffers" })
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp tags" })
 
 local telescope = require("telescope")
 telescope.load_extension("fzf")
@@ -233,7 +275,10 @@ require("nvim-autopairs").setup{}
 
 -- Treesitter (better syntax highlighting)
 require("nvim-treesitter.configs").setup({
+  -- Either install all available parsers…
   ensure_installed = { "bash", "lua", "python", "ruby", "go", "javascript", "vue" },
+  -- …or specify a list, e.g.:
+  -- ensure_installed = { "bash", "c", "cpp", "lua", "python", "rust", "go" },
   highlight = { enable = true },
   indent = { enable = true }
 })
@@ -262,7 +307,9 @@ require("persistence").setup({
 -- LSP
 local lspconfig = require("lspconfig")
 lspconfig.ruby_lsp.setup{}
-lspconfig.pyright.setup{}
+lspconfig.pyright.setup({
+  cmd = { "mise", "x", "node@23", "--", "pyright-langserver", "--stdio" }
+})
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Show hover information" })
@@ -283,15 +330,16 @@ wk.add({
   { "<leader>rriv", ":RRenameInstanceVariable<cr>", desc = "Rename instance variable" },
   { "<leader>rem", ":RExtractMethod<cr>", desc = "Extract method" },
 })
+
 -------------------------------------------
 -- 5. CUSTOM KEYMAPPINGS & AUTOCMDS
 -------------------------------------------
 
--- Some basic keymaps (feel free to expand these)
-vim.keymap.set("n", "{", ":tabprevious<CR>")
-vim.keymap.set("n", "}", ":tabnext<CR>")
-vim.keymap.set("n", "<C-n>", ":bprevious<CR>:redraw<CR>:ls<CR>")
-vim.keymap.set("n", "<F8>", ":AerialToggle<CR>")
+-- Navigation keymaps with mnemonics
+vim.keymap.set("n", "{", ":tabprevious<CR>", { desc = "Previous tab" })
+vim.keymap.set("n", "}", ":tabnext<CR>", { desc = "Next tab" })
+vim.keymap.set("n", "<C-n>", ":bprevious<CR>:redraw<CR>:ls<CR>", { desc = "[N]avigate to previous buffer" })
+vim.keymap.set("n", "<F8>", ":AerialToggle<CR>", { desc = "Toggle code outline" })
 
 -- Create a command to remove trailing whitespace.
 vim.api.nvim_create_user_command("FixWhitespace", function()
@@ -299,11 +347,19 @@ vim.api.nvim_create_user_command("FixWhitespace", function()
 end, {})
 
 -- Autocmd: Restore last cursor position when reopening a file.
+-- Unless in COMMIT_EDITMSG, which is used by Git.
 vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = {"*"},
   callback = function()
+    if vim.fn.expand("%:t") == "COMMIT_EDITMSG" then
+      -- For COMMIT_EDITMSG, always start at the top.
+      vim.api.nvim_win_set_cursor(0, {1, 0})
+      return
+    end
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(0) then
       vim.api.nvim_win_set_cursor(0, mark)
     end
   end,
 })
+
